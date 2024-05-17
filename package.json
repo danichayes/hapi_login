@@ -1,0 +1,15 @@
+{
+  "name": "postgrad_work",
+  "version": "1.0.0",
+  "description": "Collection of projects I worked on since graduating umich",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^21.3.9"
+  }
+}
