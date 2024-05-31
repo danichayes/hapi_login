@@ -12,10 +12,10 @@ module.exports.register = async server => {
 
                    // TODO: Get the current authenticate user's ID 
                    // (This will be a usernmae and password entered in on front end for you)
-                   const userId = "user1234";
+                   const userid = 1;
 
                    // execute the query
-                   const res = await db.users.getUser( userId );
+                   const res = await db.users.getUser( userid );
 
                    // return the recordset object
                    return res.recordset;

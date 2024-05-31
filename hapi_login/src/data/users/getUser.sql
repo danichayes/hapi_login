@@ -1,13 +1,8 @@
 // TODO, change query to fit your sql table and project
 
-SELECT  [id]
-       , [title]
-       , [description]
-       , [startDate]
-       , [startTime]
-       , [endDate]
-       , [endTime]
-FROM    [dbo].[events]
-WHERE   [userId] = @userId
-ORDER BY
-       [startDate], [startTime];
+SELECT  [user_id]
+       , [user_name]
+       , [user_password]
+       , [email]
+FROM    [login_proj_db].[users]
+WHERE   [user_id] = @userid

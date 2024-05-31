@@ -31,6 +31,9 @@ const client = async ( server, config ) => {
                // if so, return the existing pool
                return pool;
            }
+           // Log the configuration to ensure it's correct
+            console.log('SQL Configuration:', config);
+
            // create a new connection pool
            pool = await sql.connect( config );
 
@@ -46,6 +49,7 @@ const client = async ( server, config ) => {
            server.log( [ "error", "data" ], "error connecting to sql server" );
            server.log( [ "error", "data" ], err );
            pool = null;
+           throw err;  // Ensure the error is raised
        }
    };
 
