@@ -1,28 +1,28 @@
 "use strict";
 
-module.exports.register = async server => {
-   server.route( {
-       method: "GET",
-       path: "/api/users",
-       config: {
-           handler: async request => {
-               try {
-                   // get the sql client registered as a plugin
-                   const db = request.server.plugins.sql.client;
+module.exports.register = async (server) => {
+    server.route({
+        method: "GET",
+        path: "/api/users",
+        config: {
+            handler: async (request) => {
+                try {
+                    // Get the pg client registered as a plugin
+                    const db = request.server.plugins.pg.client;
 
-                   // TODO: Get the current authenticate user's ID 
-                   // (This will be a usernmae and password entered in on front end for you)
-                   const userid = 1;
+                    const userId = 1;
 
-                   // execute the query
-                   const res = await db.users.getUser( userid );
+                    // Call the getUser function to retrieve user information
+                    const user = await getUser(userId, db);
 
-                   // return the recordset object
-                   return res.recordset;
-               } catch ( err ) {
-                   console.log( err );
-               }
-           }
-       }
-   } );
+                    // Return the user object
+                    return user;
+                } catch (err) {
+                    console.error(err);
+                    throw err; // Rethrow the error to be caught by the framework
+                }
+            },
+        },
+    });
 };
+

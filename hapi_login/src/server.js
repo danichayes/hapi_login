@@ -1,25 +1,40 @@
-"use strict";
+const Hapi = require('@hapi/hapi');
+const { Pool } = require('pg');
+const dotenv = require('dotenv');
+dotenv.config();
 
-const Hapi = require( "@hapi/hapi" );
-const plugins = require( "./plugins" );
-const routes = require( "./routes" );
+const init = async () => {
+    const server = Hapi.server({
+        port: process.env.PORT || 3000,
+        host: 'localhost'
+    });
 
-const app = async config => {
-   const { host, port } = config;
+    const pool = new Pool({
+        host: process.env.PG_HOST,
+        user: process.env.PG_USER,
+        password: process.env.PG_PASSWORD,
+        database: process.env.PG_DATABASE,
+        port: process.env.PG_PORT,
+    });
 
-   // create an instance of hapi
-   const server = Hapi.server( { host, port } );
+    await server.register({
+        plugin: {
+            name: 'pg',
+            register: async (server, options) => {
+                server.decorate('server', 'pg', {
+                    client: pool
+                });
+            }
+        }
+    });
 
-   // store the config for later use
-   server.app.config = config;
-
-   // register plugins
-   await plugins.register( server );
-   
-   // register routes
-   await routes.register( server );
-
-   return server;
+    await server.start();
+    console.log('Server running on %s', server.info.uri);
 };
 
-module.exports = app;
+process.on('unhandledRejection', (err) => {
+    console.log(err);
+    process.exit(1);
+});
+
+init();
