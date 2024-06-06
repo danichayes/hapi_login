@@ -1,31 +1,21 @@
-'use strict';
+"use strict";
 
-const Hapi = require('@hapi/hapi');
+const server = require( "./server" );
+const config = require ("./config")
 
-const init = async () => {
+const startServer = async () => {
+   try {
+    
+       // create an instance of the server application
+       const app = await server( config );
 
-    const server = Hapi.server({
-        port: 3000,
-        host: 'localhost'
-    });
+       // start the web server
+       await app.start();
 
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (request, h) => {
-
-            return 'Hello World!';
-        }
-    });
-
-    await server.start();
-    console.log('Server running on %s', server.info.uri);
+       console.log( `Server running at http://${ config.host }:${ config.port }...` );
+   } catch ( err ) {
+       console.log( "startup error:", err );
+   }
 };
 
-process.on('unhandledRejection', (err) => {
-
-    console.log(err);
-    process.exit(1);
-});
-
-init();
+startServer();
