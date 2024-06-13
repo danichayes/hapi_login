@@ -15,6 +15,15 @@ const register = async ({ sql, getConnection }) => {
 
         return result.rows; // assuming you want to return the rows of the result
     };
+    const createUser = async (userName, userPassword, email) => {
+        // Get a connection to PostgreSQL
+        const pool = await getConnection();
+    
+        // Execute the query to create a new user
+        const result = await pool.query(sqlQueries.createUser, [userName, userPassword, email]);
+    
+        return result;
+      };
 
     return {
         getUser

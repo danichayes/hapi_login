@@ -2,11 +2,14 @@
 
 const assert = require("assert");
 const dotenv = require("dotenv");
+const path = require("path");
+
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 // read in the .env file
 dotenv.config();
-
 // capture the environment variables the application needs
+
 const { PORT,
    HOST,
    HOST_URL,

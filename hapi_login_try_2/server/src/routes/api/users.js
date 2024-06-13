@@ -24,4 +24,14 @@ module.exports.register = async server => {
            }
        }
    } );
+   server.route({
+        method: "POST",
+        path: "/api/users",
+        config: {
+            handler: async (request, h) => {
+                // Handler logic here
+                return { message: "User created" };
+            }
+        }
+    });
 };
