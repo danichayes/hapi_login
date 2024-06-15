@@ -29,6 +29,7 @@ const client = async (server, config) => {
             if (pool) {
                 // Has the connection pool already been created?
                 // If so, return the existing pool
+                console.log('returning pool')
                 return pool;
             }
 
