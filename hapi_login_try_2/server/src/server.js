@@ -5,10 +5,19 @@ const plugins = require( "./plugins" );
 const routes = require( "./routes" );
 
 const app = async config => {
-   const { host, port } = config;
 
    // create an instance of hapi
-   const server = Hapi.server( { host, port } );
+   const server = Hapi.server({
+      host: config.host, 
+      port: config.port,
+      routes: {
+         cors: {
+            origin: ['*'], // Allow all origins
+            headers: ['Accept', 'Content-Type'],
+            additionalHeaders: ['X-Requested-With']
+         }
+      }
+    });
 
    // store the config for later use
    server.app.config = config;

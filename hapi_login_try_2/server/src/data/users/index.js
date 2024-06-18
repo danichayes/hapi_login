@@ -21,9 +21,16 @@ const register = async ({ sql, getConnection }) => {
 
         const query = sqlQueries.createUser;
         // Execute the query to create a new user
-        const result = await pool.query(query, [userName, userPassword, email]);
-    
-        return result;
+        try {
+            const result = await pool.query(query, [userName, userPassword, email]);
+            return result;
+        } catch (err){
+            if (err.code === '23505') { // Unique violation error code in PostgreSQL
+                throw new Error('A user with this username or email already exists.');
+            } else {
+                throw err;
+            }
+        }
       };
 
     return {

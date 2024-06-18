@@ -25,7 +25,10 @@ module.exports.register = async (server) => {
           // Return a success message
           return h.response({ message: "User created successfully!" }).code(201);
         } catch (err) {
-            console.error(`Error creating user: ${err.message}`);
+          if (err.message === 'A user with this username or email already exists.') {
+            return h.response({ error: err.message }).code(409); // Conflict status code
+            }
+            console.log(err);
             return h.response({ error: "Failed to create user" }).code(500);
         }
       },
