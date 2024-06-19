@@ -40,3 +40,16 @@
 .read-the-docs {
   color: #888;
 }
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh; /* Full viewport height */
+  background-color: #d36d6d; /* Optional: for visibility */
+}
+
+.center-content {
+  text-align: center; /* Center text inside the component */
+}
+

@@ -6,12 +6,12 @@ const register = async ({ sql, getConnection }) => {
     // read in all the .sql files for this folder
     const sqlQueries = await utils.loadSqlQueries("users");
 
-    const getUser = async (userId) => {
+    const getUsers = async () => {
         // get a connection to PostgreSQL
         const pool = await getConnection();
 
         // execute the query with the provided userId
-        const result = await pool.query(sqlQueries.getUser, [userId]);
+        const result = await pool.query(sqlQueries.getUsers);
 
         return result.rows; // assuming you want to return the rows of the result
     };
@@ -34,7 +34,7 @@ const register = async ({ sql, getConnection }) => {
       };
 
     return {
-        getUser,
+        getUsers,
         createUser
     };
 };

@@ -3,7 +3,7 @@ CREATE DATABASE login_proj_db;
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     user_name VARCHAR(100) UNIQUE,
-    user_password VARCHAR(100),
+    user_password VARCHAR(512),
     email VARCHAR(200) UNIQUE
 );
 

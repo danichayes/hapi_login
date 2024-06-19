@@ -1,6 +1,7 @@
 
 
 "use strict";
+const crypto = require('crypto')
 
 module.exports.register = async (server) => {
   server.route({
@@ -12,12 +13,23 @@ module.exports.register = async (server) => {
           // Extract user data from the request payload
           const { userName, userPassword, email } = request.payload;
 
+          // Generate a random salt
+          const salt = crypto.randomBytes(16).toString('hex');
+
+          // Hash the password with the salt
+          const hashedPassword = await new Promise((resolve, reject) => {
+            crypto.scrypt(userPassword, salt, 64, (err, derivedKey) => {
+              if (err) reject(err);
+              resolve(salt + ':' + derivedKey.toString('hex'));
+            });
+          });
+
           // Get the SQL client registered as a plugin
           const db = request.server.plugins.sql.client;
 
 
           // Execute the query to create a new user
-          const res = await db.users.createUser(userName, userPassword, email);
+          const res = await db.users.createUser(userName, hashedPassword, email);
 
           // Log the result
           console.log(`Create user result: ${res}`);
