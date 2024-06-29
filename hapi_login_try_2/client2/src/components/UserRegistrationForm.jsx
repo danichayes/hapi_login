@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css'; // Make sure to import your CSS file
+import { useNavigate } from 'react-router-dom';
+
 
 const UserRegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,7 @@ const UserRegistrationForm = () => {
   });
 
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,6 +40,10 @@ const UserRegistrationForm = () => {
     } else {
         setMessage(result.error || 'Failed to create user');
     }
+  };
+
+  const handleBack = () => {
+    navigate('/');
   };
 
   return (
@@ -75,6 +82,7 @@ const UserRegistrationForm = () => {
             />
           </div>
           <button type="submit">Register</button>
+          <button type="button" onClick={handleBack}>Back</button>
         </form>
         {message && <p>{message}</p>}
       </div>
