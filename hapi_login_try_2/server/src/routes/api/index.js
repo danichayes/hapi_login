@@ -2,8 +2,10 @@
 
 const users = require( "./users" );
 const createUser = require("./createUser"); 
+const login = require("./login")
 
 module.exports.register = async server => {
    await users.register( server );
    await createUser.register(server);
+   await login.register(server);
 };
