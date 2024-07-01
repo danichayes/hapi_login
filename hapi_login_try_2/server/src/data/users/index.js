@@ -38,14 +38,15 @@ const register = async ({ sql, getConnection }) => {
         const pool = await getConnection();
         
         // Get query
-        query = sqlQueries.getUserByUserName;
+        const query = sqlQueries.getUserByUserName;
+        console.log(query)
 
         try {
-            const result = await pool.query(query, [userName, userPassword]);
+            const result = await pool.query(query, [userName]);
             if (result.rows.length === 0){
                 throw new Error("Username does not exist")
             }
-            return result
+            return result.rows[0]
         } catch (err){
             throw err
         }

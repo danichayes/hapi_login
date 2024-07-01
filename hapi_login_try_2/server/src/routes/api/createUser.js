@@ -2,6 +2,7 @@
 
 "use strict";
 const crypto = require('crypto')
+const hashPassword = require('../../data/utils');
 
 module.exports.register = async (server) => {
   server.route({
@@ -13,16 +14,8 @@ module.exports.register = async (server) => {
           // Extract user data from the request payload
           const { userName, userPassword, email } = request.payload;
 
-          // Generate a random salt
-          const salt = crypto.randomBytes(16).toString('hex');
-
           // Hash the password with the salt
-          const hashedPassword = await new Promise((resolve, reject) => {
-            crypto.scrypt(userPassword, salt, 64, (err, derivedKey) => {
-              if (err) reject(err);
-              resolve(salt + ':' + derivedKey.toString('hex'));
-            });
-          });
+          const hashedPassword = await hashPassword(userPassword);
 
           // Get the SQL client registered as a plugin
           const db = request.server.plugins.sql.client;
