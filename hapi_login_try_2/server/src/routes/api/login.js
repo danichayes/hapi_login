@@ -1,6 +1,6 @@
 "use strict";
 
-const comparePassword = require('../../data/utils');
+const {comparePassword} = require('../../data/utils');
 
 module.exports.register = async (server) => {
   server.route({
@@ -17,8 +17,6 @@ module.exports.register = async (server) => {
 
           // Execute the query to find the user by username
           const user = await db.users.getUserByUserName(userName);
-          console.log(user)
-          console.log(userPassword)
           // Check if the password matches
           const match = comparePassword(userPassword, user.user_password);
           if (match) {

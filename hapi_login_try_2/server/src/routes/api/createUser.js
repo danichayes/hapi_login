@@ -1,8 +1,7 @@
 
 
 "use strict";
-const crypto = require('crypto')
-const hashPassword = require('../../data/utils');
+const {hashPassword} = require('../../data/utils');
 
 module.exports.register = async (server) => {
   server.route({
@@ -15,6 +14,7 @@ module.exports.register = async (server) => {
           const { userName, userPassword, email } = request.payload;
 
           // Hash the password with the salt
+          console.log(hashPassword)
           const hashedPassword = await hashPassword(userPassword);
 
           // Get the SQL client registered as a plugin

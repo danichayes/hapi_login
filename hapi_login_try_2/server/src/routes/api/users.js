@@ -3,33 +3,29 @@
 module.exports.register = async server => {
    server.route( {
        method: "GET",
-       path: "/api/users",
+       path: "/api/{username}",
        config: {
            handler: async request => {
                try {
 
-                   // get the sql client registered as a plugin
-                   const db = request.server.plugins.sql.client;
-
-
-                   // execute the query
-                   const res = await db.users.getUsers();
-                   // return the recordset object
-                   return res;
-               } catch ( err ) {
-                   console.log( err );
-               }
+                    // get the sql client registered as a plugin
+                    console.log('ENTERING USER SCREEN')
+                    const username = request.params.username;
+                    const db = request.server.plugins.sql.client;
+                    const res = await db.users.getUserByUserName(username);
+                    if (res.length === 0) {
+                        return h.response({ error: "User not found" }).code(404);
+                    }
+        
+                    // Return the user object
+                    console.log(res)
+                    return res[0];
+                    
+                } catch (err) {
+                    console.log(err);
+                    return h.response({ error: "Failed to fetch user" }).code(500);
+                }
            }
        }
    } );
-//    server.route({
-//         method: "POST",
-//         path: "/api/users",
-//         config: {
-//             handler: async (request, h) => {
-//                 // Handler logic here
-//                 return { message: "Users grabbed" };
-//             }
-//         }
-//     });
 };

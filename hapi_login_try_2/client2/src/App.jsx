@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserRegistrationForm from './components/UserRegistrationForm.jsx';
 import HomeScreen from './components/HomeScreen.jsx';
 import LoginForm from './components/LoginForm.jsx';
+import UserProfile from './components/UserProfile';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<HomeScreen />} />
           <Route path="/register" element={<UserRegistrationForm />} />
           <Route path="/login" element={<LoginForm />}/>
+          <Route path="/:username" element={<UserProfile />} />
         </Routes>
       </div>
     </Router>

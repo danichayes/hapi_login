@@ -1,5 +1,6 @@
 // client/src/components/LoginForm.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const LoginForm = () => {
   });
 
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +33,7 @@ const LoginForm = () => {
 
     if (response.ok) {
       setMessage('Login successful!');
-      navigate('/'); // Redirect to home or dashboard
+      navigate(`/${formData.userName}`); // Redirect to home or dashboard
     } else {
       setMessage(result.error || 'Failed to login');
     }
