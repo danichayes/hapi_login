@@ -54,10 +54,24 @@ const register = async ({ sql, getConnection }) => {
 
     };
 
+    const updateUser = async (oldUsername, newUsername, email) => {
+        const pool = await getConnection();
+        const query = sqlQueries.updateUser;
+        try {
+            const result = await pool.query(query, [newUsername, email, oldUsername]);
+            return result;
+        } catch (err) {
+            console.error('Error updating user in database:', err);
+            throw err;
+        }
+
+    };
+
     return {
         getUsers,
         createUser,
-        getUserByUserName
+        getUserByUserName,
+        updateUser,
     };
 };
 

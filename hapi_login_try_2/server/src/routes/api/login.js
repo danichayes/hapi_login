@@ -18,6 +18,7 @@ module.exports.register = async (server) => {
           // Execute the query to find the user by username
           const user = await db.users.getUserByUserName(userName);
           // Check if the password matches
+          console.log('User retrieved:', user);
           const match = comparePassword(userPassword, user.user_password);
           if (match) {
             return h.response({ message: "Login successful!" }).code(200);

@@ -5,6 +5,7 @@ import UserRegistrationForm from './components/UserRegistrationForm.jsx';
 import HomeScreen from './components/HomeScreen.jsx';
 import LoginForm from './components/LoginForm.jsx';
 import UserProfile from './components/UserProfile';
+import EditUserProfile from './components/EditUserProfile.jsx';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/register" element={<UserRegistrationForm />} />
           <Route path="/login" element={<LoginForm />}/>
           <Route path="/:username" element={<UserProfile />} />
+          <Route path="/edit/:username" element={<EditUserProfile />} />
         </Routes>
       </div>
     </Router>

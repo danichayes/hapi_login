@@ -34,10 +34,15 @@ const hashPassword = (password) => {
 
 const comparePassword = (password, hash) => {
     return new Promise((resolve, reject) => {
+        if (!hash) {
+          reject(new Error('Hash is undefined or null'));
+          return;
+        }
+    
         const [salt, key] = hash.split(':');
         crypto.scrypt(password, salt, 64, (err, derivedKey) => {
-            if (err) reject(err);
-            resolve(key === derivedKey.toString('hex'));
+          if (err) reject(err);
+          resolve(key === derivedKey.toString('hex'));
         });
     });
 };
